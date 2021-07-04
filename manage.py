@@ -1,9 +1,9 @@
 from flask_script import Manager
 from flask import Flask
-
-app = Flask(__name__)
+from app import create_app
 
 # setting app
+app = create_app()
 manager = Manager(app)
 
 # define command
