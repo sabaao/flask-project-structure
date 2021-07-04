@@ -1,5 +1,6 @@
 from flask import Blueprint, request
 from app import mongo
+import flask
 
 mod = Blueprint('users', __name__, url_prefix='/users')
 
@@ -12,4 +13,4 @@ def add_users():
     content = request.get_json()
     print(content)
     mongo.db.users.insert_one(content)
-    return {"success":True}
+    return flask.jsonify(message="success")
