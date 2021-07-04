@@ -1,6 +1,8 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from app import mongo
 import flask
+import json
+from bson import json_util
 
 mod = Blueprint('users', __name__, url_prefix='/users')
 
@@ -16,4 +18,10 @@ def add_users():
         "age":content.age
     }
     mongo.db.users.insert_one(user)
-    return flask.jsonify(message="success")
+    return jsonify(message="success")
+
+@mod.route('/<user_name>',methods=['GET'])
+def query_user(user_name):
+    user = mongo.db.users.find({'name':user_name})
+    json_docs = [json.dumps(doc, default=json_util.default) for doc in user]
+    return jsonify(json_docs)
