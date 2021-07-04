@@ -11,6 +11,9 @@ def index():
 @mod.route('/',methods=['POST'])
 def add_users():
     content = request.get_json()
-    print(content)
-    mongo.db.users.insert_one(content)
+    user = {
+        "name":content.name,
+        "age":content.age
+    }
+    mongo.db.users.insert_one(user)
     return flask.jsonify(message="success")
